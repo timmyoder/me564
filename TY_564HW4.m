@@ -43,15 +43,15 @@ A3 = [
 
 
 %% Question 4-2 - Lorenz's parameters (chaotic)
-
+format short
 %lorenz parameters
 sigma = 10;
 beta = 8/3;
 
 % the three fixed points of lorenz
-fp1 = [0, 0, 0];
-fp2 = [sqrt(beta*(rho-1)), sqrt(beta*(rho-1)), (rho-1)];
-fp3 = [-sqrt(beta*(rho-1)), -sqrt(beta*(rho-1)), (rho-1);];
+% fp1 = [0, 0, 0];
+% fp2 = [sqrt(beta*(rho-1)), sqrt(beta*(rho-1)), (rho-1)];
+% fp3 = [-sqrt(beta*(rho-1)), -sqrt(beta*(rho-1)), (rho-1);];
 
 dp1 = [0; 0; 0;];
 dp2 = dp1;
@@ -60,7 +60,10 @@ dp3 = dp1;
 for i = 1:10;
 
     rho = 5*i;
-
+    fp1 = [0, 0, 0];
+    fp2 = [sqrt(beta*(rho-1)), sqrt(beta*(rho-1)), (rho-1)];
+    fp3 = [-sqrt(beta*(rho-1)), -sqrt(beta*(rho-1)), (rho-1);];
+    
     %calculate eigvalues at each step
     fp = fp1; 
 
@@ -97,6 +100,27 @@ dp1 = dp1(:,2:end);
 dp2 = dp2(:,2:end);
 dp3 = dp3(:,2:end);
 
+r = 5*[1:10];
+
+dp1 = [r;
+    dp1;
+    ];
+
+dp2 = [r;
+    dp2;
+    ];
+
+
+dp3 = [r;
+    dp3;
+    ];
+%%
+text = ["Rho";
+    "lambda 1";
+    "lambda 2";
+    "lambda 3";]
+    
+
 %%
 % Initial condition
 y0=[10; 10; 10];
@@ -126,6 +150,7 @@ for i = 1:10;
         [t,y] = ode45(@(t,y)lorenz(t,y,sigma,beta,rho),tspan,y0);
         plot3(y(:,1),y(:,2),y(:,3),'r')
         title(['Rho = ', num2str(rho)])
+        view([33,16])
     
 end
 
@@ -134,6 +159,10 @@ a4 = [0 1;
     -1 0;];
 
 eig(a4)
+
+
+
+
 %%
 % % Exercise 4-4
 clear all; close all;
@@ -152,6 +181,7 @@ for i = 1:3
     xlabel('y(t)')
     ylabel("y'(t)")
     title(['Eps = ', num2str(eps)])
+    
 end
 
 
